@@ -1,0 +1,6 @@
+{
+  "name": "Tic Tac Toe",
+  "description": "A clean, playable Tic Tac Toe web game featuring Human vs Computer with Easy, Medium, and Minimax AI difficulty modes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

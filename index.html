@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe — Play vs Computer</title>
+    <meta name="description" content="A clean, playable Tic Tac Toe web game featuring Human vs Computer with Easy, Medium, and Minimax AI difficulty modes." />
+    <meta property="og:title" content="Tic Tac Toe — Play vs Computer" />
+    <meta property="og:description" content="A clean, playable Tic Tac Toe web game featuring Human vs Computer with Easy, Medium, and Minimax AI difficulty modes." />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-container">
+      <div class="card">
+        
+        <!-- ==================== START / WELCOME SCREEN ==================== -->
+        <section id="start-screen" class="screen start-screen active" aria-labelledby="start-title">
+          <div class="brand-icon-wrapper">
+            <span class="brand-symbol x" aria-hidden="true">✕</span>
+            <span class="brand-symbol o" aria-hidden="true">◯</span>
+          </div>
+          
+          <h1 id="start-title" class="brand-title">Tic Tac Toe</h1>
+          <p class="brand-subtitle">Challenge the computer and get three in a row!</p>
+
+          <div class="difficulty-section">
+            <label class="section-label" id="difficulty-label">Select Difficulty</label>
+            <div class="difficulty-options" role="radiogroup" aria-labelledby="difficulty-label">
+              <button 
+                type="button" 
+                class="difficulty-btn" 
+                data-difficulty="easy"
+                role="radio"
+                aria-checked="false"
+                id="diff-easy-btn"
+              >
+                <span>Easy</span>
+                <span class="diff-desc">Casual</span>
+              </button>
+              <button 
+                type="button" 
+                class="difficulty-btn active" 
+                data-difficulty="medium"
+                role="radio"
+                aria-checked="true"
+                id="diff-medium-btn"
+              >
+                <span>Medium</span>
+                <span class="diff-desc">Tactical</span>
+              </button>
+              <button 
+                type="button" 
+                class="difficulty-btn" 
+                data-difficulty="hard"
+                role="radio"
+                aria-checked="false"
+                id="diff-hard-btn"
+              >
+                <span>Hard</span>
+                <span class="diff-desc">Minimax</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="button" id="start-btn" class="btn-primary">
+            <span>Start Game</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </section>
+
+        <!-- ==================== GAME SCREEN ==================== -->
+        <section id="game-screen" class="screen game-screen" aria-label="Tic Tac Toe Game Board">
+          
+          <!-- Top Bar: Navigation & Difficulty Badge -->
+          <div class="game-top-bar">
+            <button type="button" id="home-btn" class="btn-ghost" title="Back to Home">
+              <span aria-hidden="true">←</span>
+              <span>Home</span>
+            </button>
+            <span id="difficulty-badge" class="badge">Medium</span>
+          </div>
+
+          <!-- Turn Status Indicator -->
+          <div class="turn-status-container" aria-live="polite" aria-atomic="true">
+            <div id="turn-status" class="turn-indicator">
+              <span class="turn-player-x">Your turn — X</span>
+            </div>
+          </div>
+
+          <!-- Scoreboard -->
+          <div class="scoreboard" aria-label="Session Scoreboard">
+            <div class="score-box player-x">
+              <span class="score-label">You (X)</span>
+              <span id="human-score" class="score-val">0</span>
+            </div>
+            <div class="score-box draws">
+              <span class="score-label">Draws</span>
+              <span id="draws-score" class="score-val">0</span>
+            </div>
+            <div class="score-box player-o">
+              <span class="score-label">Computer (O)</span>
+              <span id="computer-score" class="score-val">0</span>
+            </div>
+          </div>
+
+          <!-- 3x3 Game Board Grid -->
+          <div class="board-container">
+            <div class="board" role="grid" aria-label="3 by 3 Tic Tac Toe Grid">
+              <button type="button" class="cell" id="cell-0" data-index="0" aria-label="Cell 1, empty"></button>
+              <button type="button" class="cell" id="cell-1" data-index="1" aria-label="Cell 2, empty"></button>
+              <button type="button" class="cell" id="cell-2" data-index="2" aria-label="Cell 3, empty"></button>
+              <button type="button" class="cell" id="cell-3" data-index="3" aria-label="Cell 4, empty"></button>
+              <button type="button" class="cell" id="cell-4" data-index="4" aria-label="Cell 5, empty"></button>
+              <button type="button" class="cell" id="cell-5" data-index="5" aria-label="Cell 6, empty"></button>
+              <button type="button" class="cell" id="cell-6" data-index="6" aria-label="Cell 7, empty"></button>
+              <button type="button" class="cell" id="cell-7" data-index="7" aria-label="Cell 8, empty"></button>
+              <button type="button" class="cell" id="cell-8" data-index="8" aria-label="Cell 9, empty"></button>
+            </div>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="game-controls">
+            <button type="button" id="restart-btn" class="btn-secondary">
+              <span aria-hidden="true">🔄</span>
+              <span>Restart Game</span>
+            </button>
+            <button type="button" id="reset-score-btn" class="btn-ghost">
+              <span>Reset Score</span>
+            </button>
+          </div>
+
+        </section>
+
+        <!-- ==================== GAME OVER / WIN MODAL ==================== -->
+        <div id="result-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <div class="modal-content">
+            <div id="modal-icon" class="modal-icon" aria-hidden="true">🎉</div>
+            <h2 id="modal-title" class="modal-title">You Win!</h2>
+            <p id="modal-desc" class="modal-desc">Great job! You defeated the computer.</p>
+            <div class="modal-actions">
+              <button type="button" id="modal-play-again-btn" class="btn-primary">Play Again</button>
+              <button type="button" id="modal-home-btn" class="btn-secondary">Back to Home</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </body>
+</html>
