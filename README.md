@@ -8,10 +8,7 @@ Built using **HTML5, CSS3, and Vanilla JavaScript** with no frameworks, backend,
 
 ---
 
-## 🚀 Live Demo
-
-🎮 **[Play Tic Tac Toe Online](https://jasmine-sd.github.io/tic-tac-toe-ai/)**
-
+**Live Demo:** [🎮 Play Tic Tac Toe Online](https://jasmine-sd.github.io/Tic-Tac-Toe-ai/)
 
 ---
 
